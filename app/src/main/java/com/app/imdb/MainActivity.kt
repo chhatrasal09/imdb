@@ -17,7 +17,7 @@ class MainActivity : FragmentActivity() {
         setContentView(binding.root)
 
         supportFragmentManager.commit {
-            add(binding.fragmentContainer.id, MovieListFragment())
+            add(binding.fragmentContainer.id, MovieListFragment(),"app")
         }
     }
 }

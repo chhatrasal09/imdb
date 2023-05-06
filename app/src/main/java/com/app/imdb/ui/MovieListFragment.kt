@@ -5,8 +5,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.commit
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import com.app.imdb.R
 import com.app.imdb.databinding.FragmentMovieListBinding
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
@@ -29,7 +31,11 @@ class MovieListFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val adapter = MovieListRecyclerAdapter()
+        val adapter = MovieListRecyclerAdapter {
+            activity?.supportFragmentManager?.commit {
+                add(R.id.fragment_container, MovieDetailFragment.newInstance(it),"app")
+            }
+        }
         binding.rvMovieList.adapter = adapter
         lifecycleScope.launch {
             viewModel.fetchMovieList().collectLatest {

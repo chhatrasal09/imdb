@@ -12,11 +12,14 @@ import com.bumptech.glide.load.resource.bitmap.CenterCrop
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.bumptech.glide.request.RequestOptions
 
-class MovieListRecyclerAdapter :
+class MovieListRecyclerAdapter(private val onItemClick: (Result) -> Unit = {}) :
     PagingDataAdapter<Result, MovieListRecyclerAdapter.ViewHolder>(COMPARATOR) {
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.onBind(getItem(position) ?: return)
+        holder.itemView.setOnClickListener {
+            onItemClick.invoke(getItem(position) ?: return@setOnClickListener)
+        }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder =
