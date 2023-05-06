@@ -33,7 +33,8 @@ class MovieListFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         val adapter = MovieListRecyclerAdapter {
             activity?.supportFragmentManager?.commit {
-                add(R.id.fragment_container, MovieDetailFragment.newInstance(it),"app")
+                add(R.id.fragment_container, MovieDetailFragment.newInstance(it))
+                    .addToBackStack("app")
             }
         }
         binding.rvMovieList.adapter = adapter
