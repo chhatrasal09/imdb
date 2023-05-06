@@ -1,6 +1,9 @@
 package com.app.imdb.model
 
 import android.os.Parcelable
+import android.text.style.RelativeSizeSpan
+import androidx.core.text.buildSpannedString
+import androidx.core.text.inSpans
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
@@ -19,4 +22,26 @@ data class Result(
     val video: Boolean,
     val vote_average: Double,
     val vote_count: Int
-) : Parcelable
+) : Parcelable {
+    val releaseDateSpan
+        get() = buildSpannedString {
+            append("Release Date\n")
+            inSpans(RelativeSizeSpan(0.75f)) {
+                append(release_date)
+            }
+        }
+    val voteAverageSpan
+        get() = buildSpannedString {
+            append("Rating\n")
+            inSpans(RelativeSizeSpan(0.75f)) {
+                append("${vote_average.toFloat()}")
+            }
+        }
+    val popularitySpan
+        get() = buildSpannedString {
+            append("Popularity\n")
+            inSpans(RelativeSizeSpan(0.75f)) {
+                append("$popularity")
+            }
+        }
+}
